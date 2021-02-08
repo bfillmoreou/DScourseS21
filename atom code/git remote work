@@ -1,0 +1,95 @@
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ ls
+DScourseS21_my_fork.Rproj  LICENSE       People       README.md
+FinalProject               LectureNotes  ProblemSets  SLURM
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ git remote -v
+origin  https://github.com/bfillmoreou/DScourseS21.git (fetch)
+origin  https://github.com/bfillmoreou/DScourseS21.git (push)
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ git remote add upstream ^C
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ git remote add upstream https://github.com/bfillmoreou/DScourseS21.git
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ git remote -v
+origin  https://github.com/bfillmoreou/DScourseS21.git (fetch)
+origin  https://github.com/bfillmoreou/DScourseS21.git (push)
+upstream        https://github.com/bfillmoreou/DScourseS21.git (fetch)
+upstream        https://github.com/bfillmoreou/DScourseS21.git (push)
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ get remote rm upstream
+bash: get: command not found
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ git remote rm upstream
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ git remote add upstream https://github.com/tyleransomu/DScourseS21.git
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ git remote -v
+origin  https://github.com/bfillmoreou/DScourseS21.git (fetch)
+origin  https://github.com/bfillmoreou/DScourseS21.git (push)
+upstream        https://github.com/tyleransomu/DScourseS21.git (fetch)
+upstream        https://github.com/tyleransomu/DScourseS21.git (push)
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ git pull upstream master
+remote: Repository not found.
+fatal: repository 'https://github.com/tyleransomu/DScourseS21.git/' not found
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ git remote add upstream https://github.com/tyleransom/DScourseS21.git
+error: remote upstream already exists.
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ git remote add upstream ^C
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ git remote add upstream ttps://github.com/tyleransom/DScourseS21.git
+error: remote upstream already exists.
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ git remote rm upstream
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ git remote add upstream https://github.com/tyleransom/DScourseS21.git
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ git remote -v
+origin  https://github.com/bfillmoreou/DScourseS21.git (fetch)
+origin  https://github.com/bfillmoreou/DScourseS21.git (push)
+upstream        https://github.com/tyleransom/DScourseS21.git (fetch)
+upstream        https://github.com/tyleransom/DScourseS21.git (push)
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ git pull upstream master
+remote: Enumerating objects: 10, done.
+remote: Counting objects: 100% (9/9), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 6 (delta 2), reused 6 (delta 2), pack-reused 0
+Unpacking objects: 100% (6/6), 656 bytes | 8.00 KiB/s, done.
+From https://github.com/tyleransom/DScourseS21
+ * branch            master     -> FETCH_HEAD
+ * [new branch]      master     -> upstream/master
+Merge made by the 'recursive' strategy.
+ People/Boomer | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 People/Boomer
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$
+
+$ git push origin master
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ git config --global user.name "Benjamin Fillmore"
+
+Benjamin Fillmore@DESKTOP-IA04IKH MINGW64 ~/Documents/Courses/data science for econometrics/DScourseS21_my_fork (master)
+$ git config --global user.email benjaminpaynefillmore@ou.edu
