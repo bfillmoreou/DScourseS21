@@ -1,0 +1,63 @@
+---
+title: "PS7_FIllmore"
+author: "Benjamin Fillmore"
+date: "3/25/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(mice)
+library(modelsummary)
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(tinytex)
+library(magrittr)
+```
+
+
+load in data
+```{r}
+path <- '/Users/Benjamin Fillmore/Documents/Courses/data_science_for_economists/Data'
+wages <- as_tibble(read.csv(paste(path, '/wages.csv', sep='')))
+```
+
+drop hgc/tenure missing values
+```{r}
+wage_up <- wages[complete.cases(wages$hgc),]
+wage_up <- wages[complete.cases(wages$tenure),]
+```
+
+summary table
+```{r}
+datasummary_skim(wage_up,histogram=F,output="markdown")
+
+est <- lm(logwage ~ hgc + as.factor(college) + poly(tenure, 2, raw=T) + age + as.factor(married), data = wage_up) #.062 is the complete case estimate of years of schooling on wages
+summary(est)
+```
+
+imputations
+```{r}
+wage_up %<>% mutate(logwage2 = case_when(!is.na(logwage) ~ logwage, is.na(logwage) ~ mean(wage_up$logwage,na.rm=T))) # mean imputation
+
+head(wage_up) 
+
+est2 <- lm(logwage2 ~ hgc + as.factor(college) + poly(tenure, 2, raw=T) + age + as.factor(married), data = wage_up) # estimated model with mean imputation
+
+pred.data = predict(est, newdata = wage_up)
+head(pred.data)
+
+wage_up %<>% mutate(logwage3 = case_when(!is.na(logwage) ~ logwage, is.na(logwage) ~ pred.data)) # predicted imputation
+
+est3 <- lm(logwage3 ~ hgc + as.factor(college) + poly(tenure, 2, raw=T) + age + as.factor(married), data = wage_up) # estimated model with predicted imputation
+
+imp<-mice(wage_up,m=6,meth="norm.nob")
+fit<-with(imp, lm(logwage~hgc+as.factor(college)+poly(tenure,2,raw=T)+age+married))
+est4<-pool(fit) # estimated model with MICE
+
+
+modelsummary(list(est,est2, est3,est4), output="latex")
+```
