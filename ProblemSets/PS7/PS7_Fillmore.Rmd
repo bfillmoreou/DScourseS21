@@ -14,7 +14,6 @@ library(modelsummary)
 library(ggplot2)
 library(dplyr)
 library(tidyverse)
-library(tinytex)
 library(magrittr)
 ```
 
@@ -59,5 +58,5 @@ fit<-with(imp, lm(logwage~hgc+as.factor(college)+poly(tenure,2,raw=T)+age+marrie
 est4<-pool(fit) # estimated model with MICE
 
 
-modelsummary(list(est,est2, est3,est4), output="latex")
+modelsummary(list(est,est2, est3,est4), output="markdown")
 ```
