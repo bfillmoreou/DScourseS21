@@ -1,0 +1,19 @@
+---
+title: "PS7_FIllmore"
+author: "Benjamin Fillmore"
+date: "3/25/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(mice)
+library(modelsummary)
+```
+
+
+load in data
+```{r}
+
+```
+
