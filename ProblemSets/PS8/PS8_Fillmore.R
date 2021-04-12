@@ -78,4 +78,4 @@ gradient <- function(theta,Y,X) {
 }
 
 
-modelsummary(estimates, output = ".tex")
+modelsummary(list(estimates), output = ".tex")
