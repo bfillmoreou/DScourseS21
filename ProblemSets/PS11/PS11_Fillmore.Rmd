@@ -1,0 +1,176 @@
+---
+title: "bike_sharing_demand_project"
+author: "Benjamin Fillmore"
+date: "4/26/2021"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(root.dir = '/Users/Benjamin Fillmore/Documents/Courses/class_data/project/bike_demand')
+```
+
+# Load in & Clean Data
+
+```{r}
+library(ggplot2)
+library(broom)
+library(tidyr)
+library(tidyverse)
+library(dplyr)
+library(magrittr)
+library(scales)
+library(lubridate)
+library(rpart)
+library(rpart.plot)
+library(randomForest)
+library(fmsb)
+library(tidymodels)
+library(modelsummary)
+library(e1071)
+library(kknn)
+library(nnet)
+set.seed(12345)
+
+filepath       <- '/Users/Benjamin Fillmore/Documents/Courses/class_data/project/bike_demand'
+
+test           <- read.csv(paste(filepath, '/test.csv', sep=''))
+train          <- read.csv(paste(filepath, '/train.csv', sep=''))
+test$registered=0
+test$casual=0
+test$count=0
+data=rbind(train,test)
+par(mfrow=c(4,2))
+par(mar = rep(2, 4))
+
+test <- test %>%
+  mutate(
+    temp = (temp*(9/5) + 32),
+    atemp = (atemp*(9/5) +32)
+    )
+
+train <- train %>%
+  mutate(
+    temp = (temp*(9/5) + 32),
+    atemp = (atemp*(9/5) +32)
+    )
+
+
+tune <- function(df) {
+  names = c("season", "holiday", "workingday", "weather")
+  df[,names] = lapply(df[,names], factor)
+  #
+  df$season=as.factor(df$season)
+  df$weather=as.factor(df$weather)
+  df$holiday=as.factor(df$holiday)
+  df$workingday=as.factor(df$workingday)
+  df$hour=substr(df$datetime,12,13)
+  df$hour=as.factor(df$hour)
+  return(df)
+
+}
+
+train    <- tune(train)
+test     <- tune(test)
+
+date     <- substr(data$datetime,1,10)
+days     <- weekdays(as.Date(date))
+data$day <- days
+
+train     <- data[as.integer(substr(data$datetime,9,10))<20,]
+test      <- data[as.integer(substr(data$datetime,9,10))>19,]
+data$year <- substr(data$datetime,1,4)
+data$year <- as.factor(data$year)
+train     <- data[as.integer(substr(data$datetime,9,10))<20,]
+test      <- data[as.integer(substr(data$datetime,9,10))>19,]
+
+train     <- data[as.integer(substr(data$datetime,9,10))<20,]
+test      <-data[as.integer(substr(data$datetime,9,10))>19,]
+
+data      <- rbind(train,test)
+
+
+data$weekend <- 0
+data$weekend[data$day=="Sunday" | data$day=="Saturday"]=1
+
+tuner <- function(df) {
+  df$season=as.factor(df$season)
+  df$holiday=as.factor(df$holiday)
+  df$workingday=as.factor(df$workingday)
+  df$weather=as.factor(df$weather)
+  df$day=as.factor(df$day)
+  return(df)
+}
+
+data  <- tuner(data)
+
+train <- data[as.integer(substr(data$datetime,9,10))<20,]
+test  <- data[as.integer(substr(data$datetime,9,10))>19,]
+```
+
+
+# Random Forest & Prediction
+
+```{r}
+set.seed(12345)
+
+train$reg1   <- train$registered+1
+train$cas1   <- train$casual+1
+train$logcas <- log(train$cas1)
+train$logreg <- log(train$reg1)
+test$logreg  <- 0
+test$logcas  <- 0
+
+fit1         <- randomForest(logreg ~ datetime + season + holiday + workingday + weather + temp + atemp + humidity + windspeed + day + year + weekend, data = train, importance = TRUE, ntree = 250)
+prediction1  <- predict(fit1, test)
+test$logreg  <-prediction1
+
+fit2         <- randomForest(logcas ~ datetime + season + holiday + workingday + weather + temp + atemp + humidity + windspeed + day + year + weekend, data = train, importance = TRUE, ntree = 250)
+prediction2  <- predict(fit2, test)
+test$logcas  <- prediction2
+
+test$registered <- exp(test$logreg)-1
+test$casual     <- exp(test$logcas)-1
+test$count      <-test$casual+test$registered
+
+sub <- data.frame(datetime=test$datetime, count=test$count)
+write.csv(sub, file = "/Users/Benjamin Fillmore/Documents/Courses/class_data/project/bike_demand//submission.csv", row.names = FALSE)
+
+confMat1 <- table(test$registered, prediction1)
+accuracy1 <- sum(diag(confMat1))/sum(confMat1)
+confMat2 <- table(test$casual, prediction2)
+accuracy2 <- sum(diag(confMat2))/sum(confMat2)
+```
+
+
+
+# Visuals
+
+```{r}
+heat1 <- heatmap(cor(train[,6:10]))
+
+box1  <- boxplot(data=train, count ~ day,  
+        main = "Rental Count by Day ",   # main plot title
+        xlab = "Day",                    # x-axis label   
+        ylab = "Count")                  # y-axis label  
+
+hist1 <- hist(train$casual, main = "Casual Rental", xlab = "Casual Rental Count")
+hist2 <- hist(train$registered, main = "Registered Rental", xlab = "Registered Rental Count")
+
+plot1 <- ggplot(data = train, aes(x = atemp, y = count, color = windspeed)) +
+  geom_point() +
+  facet_wrap(~ day, nrow = 2)
+plot1
+
+plot2 <- ggplot(data = train, aes(x = weather, y = count, color = atemp)) +
+  geom_point() +
+  facet_wrap(~ season, nrow = 2)
+plot2
+
+plot3 <- ggplot(data = train, aes(x = datetime, y = count, color = atemp)) +
+  geom_point()
+plot3
+```
+
