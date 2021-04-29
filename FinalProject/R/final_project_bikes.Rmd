@@ -136,6 +136,7 @@ test$count      <-test$casual+test$registered
 sub <- data.frame(datetime=test$datetime, count=test$count)
 write.csv(sub, file = "/Users/Benjamin Fillmore/Documents/Courses/class_data/project/bike_demand//submission.csv", row.names = FALSE)
 
+
 confMat1 <- table(test$registered, prediction1)
 accuracy1 <- sum(diag(confMat1))/sum(confMat1)
 confMat2 <- table(test$casual, prediction2)
@@ -170,5 +171,13 @@ plot2
 plot3 <- ggplot(data = train, aes(x = datetime, y = count, color = atemp)) +
   geom_point()
 plot3
+
+plot4 <- ggplot(data = test, aes( x = day, y = count)) +
+  geom_point()
+
+plot5 <- ggplot(data = train, aes( x= day, y = count)) +
+  geom_point()
+plot4
+plot5
 ```
 
