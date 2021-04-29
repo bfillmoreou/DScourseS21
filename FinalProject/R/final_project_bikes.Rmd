@@ -355,6 +355,10 @@ plot2
 plot3 <- ggplot(data = train, aes(x = datetime, y = count, color = atemp)) +
   geom_point()
 plot3
+
+plot4 <- ggplot(data = train, aes(x = day, y = count)) +
+  geom_point()
+plot5 <- ggplot(data = test, aes(x = day, y = count)) +
+  geom_point()
 ```
 
->>>>>>> e5d19d464c6c2a326d4b4a3abc0465c9e3bc8fdb
