@@ -325,6 +325,7 @@ confMat1 <- table(test$registered, prediction1)
 accuracy1 <- sum(diag(confMat1))/sum(confMat1)
 confMat2 <- table(test$casual, prediction2)
 accuracy2 <- sum(diag(confMat2))/sum(confMat2)
+
 ```
 
 
@@ -361,7 +362,7 @@ plot4 <- ggplot(data = train, aes(x = day, y = count)) +
 plot5 <- ggplot(data = test, aes(x = day, y = count)) +
   geom_point()
 
-boxplot(count~day,
+box1 <- boxplot(count~day,
         data = train,
         main = "Boxplot for Actual Counts by Day",
         xlab = "Day of Week",
@@ -370,7 +371,7 @@ boxplot(count~day,
         border = "brown"
 )
 
-boxplot(count~day,
+box2 <- boxplot(count~day,
         data = test,
         main = "Boxplot for Predicted Counts by Day",
         xlab = "Day of Week",
@@ -383,6 +384,6 @@ parm(mfrow = c(2,2))
 plot(fit1)
 plot(fit2)
 
-
+compbox <- boxplot(new)
 ```
 
