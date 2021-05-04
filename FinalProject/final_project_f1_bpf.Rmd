@@ -1,0 +1,56 @@
+---
+title: "F1 Project"
+author: "Benjamin Fillmore"
+date: "4/26/2021"
+output: html_document
+---
+
+# Set Up & Import Data
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "/Users/Benjamin Fillmore/Documents/Courses/class_data/project/f1")
+library(ggplot2)
+library(broom)
+library(tidyr)
+library(tidyverse)
+library(dplyr)
+library(pdfetch)
+library(magrittr)
+library(lmtest)
+library(sandwich)
+library(tsibble)
+library(tidyverse)
+library(car)
+library(estimatr)
+library(arsenal)
+library(psych)
+library(plm)
+library(modelsummary)
+library(plotly)
+set.seed(27)
+
+filepath      <- '/Users/Benjamin Fillmore/Documents/Courses/class_data/project/f1'
+
+circuits                <- read.csv(paste(filepath, '/circuits.csv', sep=''))
+constructor_results     <- read.csv(paste(filepath, '/constructor_results.csv', sep=''))
+constructor_standings   <- read.csv(paste(filepath, '/constructor_standings.csv', sep=''))
+constructors            <- read.csv(paste(filepath, '/constructors.csv', sep=''))
+driver_standings        <- read.csv(paste(filepath, '/driver_standings.csv', sep=''))
+drivers                 <- read.csv(paste(filepath, '/drivers.csv', sep=''))
+lap_times               <- read.csv(paste(filepath, '/lap_times.csv', sep=''))
+pit_stops               <- read.csv(paste(filepath, '/pit_stops.csv', sep=''))
+qualifying              <- read.csv(paste(filepath, '/qualifying.csv', sep=''))
+races                   <- read.csv(paste(filepath, '/races.csv', sep=''))
+results                 <- read.csv(paste(filepath, '/results.csv', sep=''))
+seasons                 <- read.csv(paste(filepath, '/seasons.csv', sep=''))
+status                  <- read.csv(paste(filepath, '/status.csv', sep=''))
+
+```
+
+# Visualize Data
+
+```{r}
+
+```
+

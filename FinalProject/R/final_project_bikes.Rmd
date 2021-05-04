@@ -360,5 +360,29 @@ plot4 <- ggplot(data = train, aes(x = day, y = count)) +
   geom_point()
 plot5 <- ggplot(data = test, aes(x = day, y = count)) +
   geom_point()
+
+boxplot(count~day,
+        data = train,
+        main = "Boxplot for Actual Counts by Day",
+        xlab = "Day of Week",
+        ylab = "Count",
+        col = "orange",
+        border = "brown"
+)
+
+boxplot(count~day,
+        data = test,
+        main = "Boxplot for Predicted Counts by Day",
+        xlab = "Day of Week",
+        ylab = "Count",
+        col = "orange",
+        border = "brown"
+)
+
+parm(mfrow = c(2,2))
+plot(fit1)
+plot(fit2)
+
+
 ```
 

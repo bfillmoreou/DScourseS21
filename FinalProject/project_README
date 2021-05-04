@@ -1,0 +1,9 @@
+Download Data from https://www.kaggle.com/c/bike-sharing-demand/data
+
+alter filepath to working directory
+
+set seed at 12345
+
+run code and export results
+
+check submission score at https://www.kaggle.com/c/bike-sharing-demand/submissions
