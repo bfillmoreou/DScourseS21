@@ -30,6 +30,12 @@ dfMean.imp$logwage[is.na(dfMean.imp$logwage)] <- mean(dfMean.imp$logwage,na.rm=T
 imp.est <- lm(logwage ~ hgc + union + college + exper + exper^2, data = dfMean.imp)
 summary(imp.est)
 
+models <- list()
+models[[1]] <- list.est
+models[[2]] <- imp.est
+
+modelsummary(models)
+
 # Sample Selection
 
 wages$valid <- is.na(wages$logwage)
