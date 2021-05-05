@@ -22,12 +22,14 @@ summary(a)
 newwages <- na.omit(wages)
 list.est <- lm(logwage ~ hgc + union + college + exper + exper^2, data = newwages)
 summary(list.est)
+
 # Mean Imputation
 
 dfMean.imp <- wages
 dfMean.imp$logwage[is.na(dfMean.imp$logwage)] <- mean(dfMean.imp$logwage,na.rm=T)
 imp.est <- lm(logwage ~ hgc + union + college + exper + exper^2, data = dfMean.imp)
 summary(imp.est)
+
 # Sample Selection
 
 wages$valid <- is.na(wages$logwage)
@@ -39,5 +41,23 @@ heck <- selection(selection = valid ~ hgc + union + college + exper + married + 
 summary(heck)
 
 # probit
+
 prob.est <- glm(union==1 ~ hgc + college + exper + married + kids, data = wages)
 summary(prob.est)
+
+# predicted probability
+
+wages$pred.probit <- predict(prob.est, newdata = wages, type = "response")
+summary(wages$pred.probit)
+mean(summary(wages$pred.probit))
+
+# married & kids
+
+prob.est$coefficients["married"] <- 0
+prob.est$coefficients["kids"]    <- 0
+
+wages$pred.probit <- predict(prob.est, newdata = wages, type = "response")
+summary(wages$pred.probit)
+mean(summary(wages$pred.probit))
+
+# No, deleting out the relationship between married & kids on our dependent variable would compromise the model, I'd assume
