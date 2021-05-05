@@ -14,7 +14,6 @@ wages$union   <- as.factor(wages$union)
 mean(is.na(wages$logwage))
 a<-aggr(wages)
 summary(a)
-scattmatrixMiss(wages)
 
 # MAR
 
