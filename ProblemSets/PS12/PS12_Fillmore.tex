@@ -1,0 +1,26 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{PS12_Fillmore}
+\author{benjaminpaynefillmore }
+\date{March 2021}
+
+\usepackage{graphicx}
+
+\begin{document}
+\graphicspath{ {./images/} }
+\maketitle
+
+\section{Main}
+
+I would say logwage is mcar, as there seems to be no consistency between why the data points are missing, and this missing-ness does not seem to carryover into the related rows.  
+
+From these models, the cleaned Heckman model is far and away the most accurate regarding Beta1. I could not include it in my modelsummary(), but I've attached its output below as well.
+
+No, deleting out the relationship between married & kids on our dependent variable would compromise the model, I'd assume
+
+\includegraphics[width=\textwidth]{Images/ps12.png}
+\includegraphics[width=\textwidth]{Images/Rplot.png}
+\includegraphics[width=\textwidth]{Images/heck.png}
+
+\end{document}
